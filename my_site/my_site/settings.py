@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'debug_toolbar',
     'news.apps.NewsConfig'
 ]
 
@@ -48,6 +49,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
 
 ROOT_URLCONF = 'my_site.urls'
@@ -78,6 +80,11 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        # 'ENGINE': 'django.db.backends.mysql,  # подключаем mysql
+        # 'NAME': 'django',  # название созданной базы
+        # 'USER': 'root',  # если юзать оупен сервер там по умолчанию имя пользователя 'root'(на реальных базах будет другое имя)
+        # 'PASSWORD': '',  # оупен сервер там по умолчанию пустая строка
+        # 'HOST': 'localhost',
     }
 }
 
@@ -130,4 +137,5 @@ STATICFILES_DIRS = [
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')  # создаем папку media(в которую будут грузиться картинки) в корне нашего приложения(BASE_DIR -ведет к корню нашего приложения)
 MEDIA_URL = '/media/'  # указываем эту папку для построения url
 
+INTERNAL_IPS = ['127.0.0.1']
 

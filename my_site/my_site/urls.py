@@ -32,5 +32,11 @@ urlpatterns = [
 # создаем константу для отладочного режима(режима разработки) чтоб можно было просматривать фото файлы пока DEBUG = True
 
 if settings.DEBUG:  # на реальном сервере это условие выполняться не будет
+
+    import debug_toolbar
+
+    urlpatterns = [
+                      path('__debug__/', include(debug_toolbar.urls)),
+                  ] + urlpatterns
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)  # по этому маршруту в отладочном режиме джанго будет отдавать медео вайлы
 

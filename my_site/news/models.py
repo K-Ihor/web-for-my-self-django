@@ -16,10 +16,11 @@ class News(models.Model):                   # verbose_name='Наитменова
     photo = models.ImageField(upload_to='photos/%Y%m%d/', verbose_name='Фото', blank=True)  # upload_to= - можно указать куда именно загружать файл по указанному пути. photos/%Y%m%d/-означает что фото будут разбиваться в папки по дате
     is_published = models.BooleanField(default=True, verbose_name='Опубликовано?')  # default=True - если не указать True то по умолчанию None
                                             # on_delete=models.PROTECT - защита от удаления связанных данных в таблице
-    category = models.ForeignKey('Category', on_delete=models.PROTECT, verbose_name='Категория', null=True)  # Связываем модели(таблицы) Если 'Category' создаеться позже то указываем её в скобках в виде строки, если раньше то без скобок' '
+    category = models.ForeignKey('Category', on_delete=models.PROTECT, verbose_name='Категория')  #, related_name='get_news')  # null=True)  # Связываем модели(таблицы) Если 'Category' создаеться позже то указываем её в скобках в виде строки, если раньше то без скобок' '
+    views = models.IntegerField(default=0)
 
     def get_absolute_url(self):  # используя этот параметер django сам выстроит ссылку.
-        return reverse('view_news', kwargs={"news_id": self.pk})
+        return reverse('view_news', kwargs={"pk": self.pk})  # reverse-занимаеться построением ссылки на основе именнованого адреса(view_news) и передает туда аргументы kwargs
 
     def __str__(self):  # чтоб выводить данные title в виде строки а не ( News object (1) )
         return self.title
