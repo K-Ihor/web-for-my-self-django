@@ -25,6 +25,7 @@ class HomeNews(MyMixin, ListView):
     context_object_name = 'news'  # указываем название обекта с которым мы хотим работать(подозреваю что news это папка в темплейтс, запутался или приложение наше)
     # extra_context = {'title': 'Главная'}  # можем передать какие-то дополнительные данные.Опционально и желательно для статичных данных
     mixin_prop = 'hello world'  # для примера юзания мексина
+    paginate_by = 2  # постраничная навигация для класса по 2 записи на страничку
 
     def get_context_data(self, *, object_list=None, **kwargs):  # можно юзать вместо extra_context, этот метод больше для динамических данных
         context = super().get_context_data(**kwargs)  # класс super()-вернет нам родительский метод и **kwargs передаем наш словарь
@@ -43,6 +44,7 @@ class NewsByCategory(MyMixin, ListView):  # Класс получения кат
     template_name = 'news/home_news_list.html'  # юзаем тот же самый шаблон(не создаем новый) так как они не чем не отличаються у нас.
     context_object_name = 'news'
     allow_empty = False  # неразрешаем показ пустых списков(тем самым блокируем 500-ю ошибку, а видем 404)
+    paginate_by = 2  # навигация для класса по 2 записи на страничку при выборе любой категории.
 
     def get_context_data(self, *, object_list=None, **kwargs):  # можно юзать вместо extra_context, этот метод больше для динамических данных
         context = super().get_context_data(**kwargs)  # класс super()-вернет нам родительский метод и **kwargs передаем наш словарь
