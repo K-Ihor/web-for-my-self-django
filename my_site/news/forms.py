@@ -1,6 +1,5 @@
 from django import forms
 
-
 # from .models import Category
 # #  1) Создаем форму которая не связана с моделью  и пописываем поля в ней
 # class NewsForm(forms.Form):                                 # widget=forms.Tex... делает вид поля под бутсрап
@@ -16,6 +15,25 @@ from django import forms
 from .models import News
 import re  # импортируем этот модуль для регулярных выражений.(нам для создания кастомного валидатора)
 from django.core.exceptions import ValidationError  # для вывода исключения
+from django.contrib.auth.forms import UserCreationForm  # для создания формы регистрации
+from django.contrib.auth.models import User  # для создания формы регистрации юзера
+
+
+class UserRegisterForm(UserCreationForm):  # для создания формы регистрации
+    username = forms.CharField(label='Имя пользователя', help_text='Максимум 150 символов', widget=forms.TextInput(attrs={"class": "form-control"}))  # Если поставить 'autocomplete': 'off' в attrs, то подсказки ввода выдавать не будет
+    password1 = forms.CharField(label='Пароль', widget=forms.PasswordInput(attrs={"class": "form-control"}))  # определяем поле которое нам нужны
+    password2 = forms.CharField(label='Подтверждение пароля', widget=forms.PasswordInput(attrs={"class": "form-control"}))
+    email = forms.EmailField(label='E-mail', widget=forms.EmailInput(attrs={"class": "form-control"}))
+
+    class Meta:
+        model = User  # Связываем форму с моделью User(это джанговская модель)
+        fields = ('username', 'email', 'password1', 'password2')  # поля в каком порядке должны быть представлены в форме. И по желанию ('first_name' and 'last_name')
+        # widgets = {
+        #     'username': forms.TextInput(attrs={"class": "form-control"}),
+        #     'email': forms.EmailInput(attrs={"class": "form-control"}),
+        #     'password1': forms.PasswordInput(attrs={"class": "form-control"}),
+        #     'password2': forms.PasswordInput(attrs={"class": "form-control"}),
+        # }  # Лучше настраивать это выше в (class UserRegisterForm(UserCreationForm):) так как имя пользователя настраиваеться, а имэйл и парол нет
 
 
 class NewsForm(forms.ModelForm):
