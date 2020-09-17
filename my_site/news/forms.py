@@ -15,8 +15,13 @@ from django import forms
 from .models import News
 import re  # импортируем этот модуль для регулярных выражений.(нам для создания кастомного валидатора)
 from django.core.exceptions import ValidationError  # для вывода исключения
-from django.contrib.auth.forms import UserCreationForm  # для создания формы регистрации
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm  # для создания формы регистрации и аунтефикации
 from django.contrib.auth.models import User  # для создания формы регистрации юзера
+
+
+class UserLoginForm(AuthenticationForm):  # для создания формы аутентификации и авторизации
+    username = forms.CharField(label='Имя пользователя', widget=forms.TextInput(attrs={"class": "form-control"}))  # Если поставить 'autocomplete': 'off' в attrs, то подсказки ввода выдавать не будет
+    password = forms.CharField(label='Пароль', widget=forms.PasswordInput(attrs={"class": "form-control"}))  # определяем поля которое нам нужны
 
 
 class UserRegisterForm(UserCreationForm):  # для создания формы регистрации
