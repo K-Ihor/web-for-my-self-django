@@ -7,11 +7,12 @@ from django.core.paginator import Paginator  # для теста постран�
 
 
 from .models import News, Category
-from .forms import NewsForm, UserRegisterForm, UserLoginForm
+from .forms import NewsForm, UserRegisterForm, UserLoginForm, ContactForm  # ContactForm-для отправки письма на email
 from .utils import MyMixin  # для примера юзания мексина
 # from django.contrib.auth.forms import UserCreationForm  # для создания регистрации
 from django.contrib import messages  # нам для вывода сообщения об успешной регистрации
 from django.contrib.auth import login, logout  # для аутентификации и выхода из аккаунта
+from django.core.mail import send_mail
 
 
 def register(request):  # ф-я для регистрации и заносим её в маршруты урл.пй
@@ -51,12 +52,29 @@ def user_logout(request):  # для выхода из аккаунта
     return redirect('login')
 
 
-def test(request):  # постраничная навигация (тест)
-    objects = ['John1', 'paule2', 'george3', 'ringo4', 'John5', 'paule6', 'george7']
-    paginator = Paginator(objects, 2)  # передаем наш список и говорим что на одной страничке нам нужно выводить 2 записи
-    page_num = request.GET.get('page', 1)  # дальше получаем номер текущей странички и если этого параметра page нет то ему будет присвоена 1
-    page_objects = paginator.get_page(page_num)  # передаем сюда page_num чтоб получить обьект для данной странички.
-    return render(request, 'news/test.html', {'page_obj': page_objects})
+def test(request):  # для отправки письма на email
+    if request.method == 'POST':  # если данные пришли с POST
+        form = ContactForm(request.POST)
+        if form.is_valid():  # проводим валидацию формы(Если данные валидны)
+            mail = send_mail(form.cleaned_data['subject'], form.cleaned_data['content'], '.......@ukr.net', ['....erov.m@gmail.com'], fail_silently=False)  # берем данные из словаря cleaned_data и с какого ящика отправляем письмо
+            if mail:  # если письмо отправилось(то есть send_mail вернул нам '1' то)
+                messages.success(request, 'Письмо отправлено')  # cообщим пользователю об успешной отправке письма
+                return redirect('test')  # и редирект на тестовую страничку чтоб очистить нашу форму
+            else:  #  если send_mail вернул нам '0' то
+                messages.error(request, 'Ошибка отправки')
+        else:  # если форма не прошла валидацию
+            messages.error(request, 'Ошибка регистрации')  # редирект не делаем, а оставляем его на этой страничке, чтоб не удалить данные и инф об ошибках
+    else:
+        form = ContactForm()
+    return render(request, 'news/test.html', {"form": form})  # {"form": form} - передали форму
+
+
+# def test(request):  # постраничная навигация (тест)
+#     objects = ['John1', 'paule2', 'george3', 'ringo4', 'John5', 'paule6', 'george7']
+#     paginator = Paginator(objects, 2)  # передаем наш список и говорим что на одной страничке нам нужно выводить 2 записи
+#     page_num = request.GET.get('page', 1)  # дальше получаем номер текущей странички и если этого параметра page нет то ему будет присвоена 1
+#     page_objects = paginator.get_page(page_num)  # передаем сюда page_num чтоб получить обьект для данной странички.
+#     return render(request, 'news/test.html', {'page_obj': page_objects})
 
 
 class HomeNews(MyMixin, ListView):

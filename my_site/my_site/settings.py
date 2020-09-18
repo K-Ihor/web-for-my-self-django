@@ -139,3 +139,12 @@ MEDIA_URL = '/media/'  # указываем эту папку для постр�
 
 INTERNAL_IPS = ['127.0.0.1']
 
+
+EMAIL_HOST = 'smtp.ukr.net'  # для отправки писем на емэил (либо smtp.gmail.com)
+EMAIL_PORT = 465  # 465 либо 2525(!)
+EMAIL_HOST_USER = '.......@ukr.net'
+EMAIL_HOST_PASSWORD = '.....'
+EMAIL_USE_TLS = False
+EMAIL_USE_SSL = True
+
+

@@ -19,6 +19,11 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm  # д
 from django.contrib.auth.models import User  # для создания формы регистрации юзера
 
 
+class ContactForm(forms.Form):  # для отправки писем на EMAIL, ниже определяем поля
+    subject = forms.CharField(label='Тема', widget=forms.TextInput(attrs={"class": "form-control"}))  # тема письма
+    content = forms.CharField(label='Текст', widget=forms.Textarea(attrs={"class": "form-control", "rows": 5}))  # тело письма,  чтоб форма была не большой добавим "rows": 5  - 5 рядов
+
+
 class UserLoginForm(AuthenticationForm):  # для создания формы аутентификации и авторизации
     username = forms.CharField(label='Имя пользователя', widget=forms.TextInput(attrs={"class": "form-control"}))  # Если поставить 'autocomplete': 'off' в attrs, то подсказки ввода выдавать не будет
     password = forms.CharField(label='Пароль', widget=forms.PasswordInput(attrs={"class": "form-control"}))  # определяем поля которое нам нужны
