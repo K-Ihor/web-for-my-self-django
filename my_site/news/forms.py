@@ -17,11 +17,13 @@ import re  # импортируем этот модуль для регуляр�
 from django.core.exceptions import ValidationError  # для вывода исключения
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm  # для создания формы регистрации и аунтефикации
 from django.contrib.auth.models import User  # для создания формы регистрации юзера
+from captcha.fields import CaptchaField  # для создания Капчи
 
 
 class ContactForm(forms.Form):  # для отправки писем на EMAIL, ниже определяем поля
     subject = forms.CharField(label='Тема', widget=forms.TextInput(attrs={"class": "form-control"}))  # тема письма
     content = forms.CharField(label='Текст', widget=forms.Textarea(attrs={"class": "form-control", "rows": 5}))  # тело письма,  чтоб форма была не большой добавим "rows": 5  - 5 рядов
+    captcha = CaptchaField()  # добавляем Капчу
 
 
 class UserLoginForm(AuthenticationForm):  # для создания формы аутентификации и авторизации

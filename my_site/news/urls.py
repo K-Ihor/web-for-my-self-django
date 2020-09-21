@@ -18,7 +18,7 @@ urlpatterns = [
     path('news/<int:pk>/', ViewNews.as_view(), name='view_news'),  # маршрут для созданного класса
     # path('news/add-news/', add_news, name='add_news'),  # добавляем путь для форм в виде фу-ции
     path('news/add-news/', CreateNews.as_view(), name='add_news'),  # добавляем путь для форм в виде класс
-    path('test/', test, name='test'),  # тестируем построчную пагинацию, когда будет запрошен адрес test/, мы обратимся к фу-ци test( и отправку письма тоже тестим на этом пути)
+    path('contact/', contact, name='contact'),  # для отправки письма
 ]
 
 

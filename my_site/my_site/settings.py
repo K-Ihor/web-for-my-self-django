@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     'debug_toolbar',
     'ckeditor',
     'ckeditor_uploader',
-    'news.apps.NewsConfig'
+    'captcha',
+    'news.apps.NewsConfig',
 ]
 
 MIDDLEWARE = [
@@ -144,8 +145,8 @@ INTERNAL_IPS = ['127.0.0.1']
 
 EMAIL_HOST = 'smtp.ukr.net'  # для отправки писем на емэил (либо smtp.gmail.com)
 EMAIL_PORT = 465  # 465 либо 2525(!)
-EMAIL_HOST_USER = '.......@ukr.net'
-EMAIL_HOST_PASSWORD = '.....'
+EMAIL_HOST_USER = 'd12d17@ukr.net'
+EMAIL_HOST_PASSWORD = 'd12d17d17d17'
 EMAIL_USE_TLS = False
 EMAIL_USE_SSL = True
 
@@ -217,3 +218,5 @@ CKEDITOR_CONFIGS = {
     }
 }
 
+CAPTCHA_LETTER_ROTATION = None  # чтоб выставить Капчу ровно(буквы)
+CAPTCHA_CHALLENGE_FUNCT = 'captcha.helpers.math_challenge'  # математическая Капча

@@ -52,18 +52,18 @@ def user_logout(request):  # для выхода из аккаунта
     return redirect('login')
 
 
-def test(request):  # для отправки письма на email
+def contact(request):  # для отправки письма на email
     if request.method == 'POST':  # если данные пришли с POST
         form = ContactForm(request.POST)
         if form.is_valid():  # проводим валидацию формы(Если данные валидны)
-            mail = send_mail(form.cleaned_data['subject'], form.cleaned_data['content'], '.......@ukr.net', ['....erov.m@gmail.com'], fail_silently=False)  # берем данные из словаря cleaned_data и с какого ящика отправляем письмо
+            mail = send_mail(form.cleaned_data['subject'], form.cleaned_data['content'], 'd12d17@ukr.net', ['i.kucherov.m@gmail.com'], fail_silently=False)  # берем данные из словаря cleaned_data и с какого ящика отправляем письмо
             if mail:  # если письмо отправилось(то есть send_mail вернул нам '1' то)
                 messages.success(request, 'Письмо отправлено')  # cообщим пользователю об успешной отправке письма
-                return redirect('test')  # и редирект на тестовую страничку чтоб очистить нашу форму
+                return redirect('contact')  # и редирект на тестовую страничку чтоб очистить нашу форму
             else:  #  если send_mail вернул нам '0' то
                 messages.error(request, 'Ошибка отправки')
         else:  # если форма не прошла валидацию
-            messages.error(request, 'Ошибка регистрации')  # редирект не делаем, а оставляем его на этой страничке, чтоб не удалить данные и инф об ошибках
+            messages.error(request, 'Ошибка валидации')  # редирект не делаем, а оставляем его на этой страничке, чтоб не удалить данные и инф об ошибках
     else:
         form = ContactForm()
     return render(request, 'news/test.html', {"form": form})  # {"form": form} - передали форму
