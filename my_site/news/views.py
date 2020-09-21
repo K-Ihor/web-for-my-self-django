@@ -56,7 +56,7 @@ def contact(request):  # для отправки письма на email
     if request.method == 'POST':  # если данные пришли с POST
         form = ContactForm(request.POST)
         if form.is_valid():  # проводим валидацию формы(Если данные валидны)
-            mail = send_mail(form.cleaned_data['subject'], form.cleaned_data['content'], 'd12d17@ukr.net', ['i.kucherov.m@gmail.com'], fail_silently=False)  # берем данные из словаря cleaned_data и с какого ящика отправляем письмо
+            mail = send_mail(form.cleaned_data['subject'], form.cleaned_data['content'], '.....@ukr.net', ['i.kucherov.m@gmail.com'], fail_silently=False)  # берем данные из словаря cleaned_data и с какого ящика отправляем письмо
             if mail:  # если письмо отправилось(то есть send_mail вернул нам '1' то)
                 messages.success(request, 'Письмо отправлено')  # cообщим пользователю об успешной отправке письма
                 return redirect('contact')  # и редирект на тестовую страничку чтоб очистить нашу форму
