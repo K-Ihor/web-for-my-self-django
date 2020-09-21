@@ -1,13 +1,24 @@
 from django.contrib import admin
 from django.utils.safestring import mark_safe  # для получения картинки в админке в поле photo
+from django import forms
+from ckeditor_uploader.widgets import CKEditorUploadingWidget  # для подключения редактора текста в админку
 
 from .models import News, Category  # Импортируем модель
 # Register your models here.
 
 
+class NewsAdminForm(forms.ModelForm):  # класс для подключения редактора текста в админку
+    content = forms.CharField(widget=CKEditorUploadingWidget())  # поле модели в которое поместим редактор(тело новостей)
+
+    class Meta:
+        model = News  # нужная нам модель
+        fields = '__all__'
+
+
 # Класс являеться под класом .ModelAdmin
        # NewsAdmin - настройка(Админки) модели News
 class NewsAdmin(admin.ModelAdmin):  # чтоб вывести дополнительные поля из базы в интерфэйс(предтавление модели в админке)
+    form = NewsAdminForm  # вносим в админку наш CKEditor
     list_display = ('id', 'title', 'category', 'created_at', 'updated_at', 'is_published', 'get_photo')  # поля которые мы хотим видеть
     list_display_links = ('id', 'title')  # превращает поля в ссылку(когда наводишь мышкой наименование подсвечивается)
     search_fields = ('title', 'content')  # Поля по которым можно проводить поиск(после обновления появиться поле для поиска)
@@ -24,7 +35,6 @@ class NewsAdmin(admin.ModelAdmin):  # чтоб вывести дополните
             return '-'
 
     get_photo.short_description = 'Миниатюра'  #
-
 
 
 class CategoryAdmin(admin.ModelAdmin):  # настройка модели Category

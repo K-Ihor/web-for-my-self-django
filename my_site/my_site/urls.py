@@ -24,6 +24,7 @@ from news.views import *  # импортируем нашу ф-ю index(кото
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('ckeditor/', include('ckeditor_uploader.urls')),
     path('', include('news.urls')),  # указываем новый маршрут при обращении к news/ будет вызвана ф-я index из news.views, а если пустая строка '' то обратиться к инклюд и начальная страничка выведет нашу ф-ю индекс в начальной страничке
     # path('test/', test),  # либо через include(список вложеных маршрутов с нашего созданного файла urls в модуле news)
 ]
