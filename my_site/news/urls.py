@@ -1,4 +1,5 @@
 from django.urls import path  # импортируем ф-ю path для построения списков маршрутов
+from django.views.decorators.cache import cache_page  # для кэширования
 
 from .views import *  # .- точка указывает на текущую дерикторию
 
@@ -7,7 +8,8 @@ urlpatterns = [
     path('register/', register, name='register'),  # путь для регистра, при указ.маршруте 'register/' вызыв ф-ю register из views
     path('login/', user_login, name='login'),  # путь для регистра, при указ.маршруте 'login/' вызыв ф-ю login из views
     path('logout/', user_logout, name='logout'),  # для выхода с аккаунта
-    path('', HomeNews.as_view(), name='home'),  # указываем путь для класса который мы описали в views.py
+    # path('', cache_page(60)(HomeNews.as_view()), name='home'), # кэшируем главную страничку на 60 секунд
+    path('', HomeNews.as_view(), name='home'),  # указываем путь для класса который мы описали в views.py, кэшируем главную страничку на 60 секунд
     # path('', index, name='home'),  # присваеваем имена ссылкаим name='home'
     #  первым агрументом мы указываем ''- пустую строку в место (news/) так как часть пути отбрасывается, эта часть указана в migration/urls.py при использовании include
     # фторой аргумент ф-я index из текущей дериктории, файла .views

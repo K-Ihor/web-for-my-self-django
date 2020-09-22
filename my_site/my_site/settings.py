@@ -220,3 +220,12 @@ CKEDITOR_CONFIGS = {
 
 CAPTCHA_LETTER_ROTATION = None  # чтоб выставить Капчу ровно(буквы)
 CAPTCHA_CHALLENGE_FUNCT = 'captcha.helpers.math_challenge'  # математическая Капча
+
+
+# кеширование в файловую систему.
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',  # указано что кеширование будет в файловую систему
+        'LOCATION': os.path.join(BASE_DIR, 'django_cache'),  # прописываем путь куда сохранять кеш
+    }
+}

@@ -16,7 +16,10 @@
     <div class="row">
 
         <div class="col-md-3">
+            <!--{% load cache %} кэширование -->
+            <!--{% cache 30 sidebar %}кэширование-->
             {% block sidebar %}SIDEBAR{% endblock %}
+            <!--{% endcache %}кэширование-->
         </div>
 
         <div class="col-md-9">
